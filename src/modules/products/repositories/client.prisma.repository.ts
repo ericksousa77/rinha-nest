@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@src/shared/modules/persistence/prisma.service'
 
 import { ClientRepository } from '../domain/interfaces/client.repository.interface'
-import { Prisma, TRANSACTION_TYPE } from '@prisma/client'
+import { Prisma, TRANSACTION_TYPE, clients as Client } from '@prisma/client'
 
 @Injectable()
 export class ClientPrismaRepository implements ClientRepository {
@@ -16,7 +16,7 @@ export class ClientPrismaRepository implements ClientRepository {
   async findLastTenTransactionsByUser(
     clientId: number,
     transaction?: Prisma.TransactionClient
-  ): Promise<any> {
+  ): Promise<Client> {
     const repository =
       transaction && transaction instanceof PrismaService
         ? transaction.clients
@@ -43,7 +43,7 @@ export class ClientPrismaRepository implements ClientRepository {
   async findClientById(
     clientId: number,
     transaction?: Prisma.TransactionClient
-  ): Promise<any> {
+  ): Promise<Client> {
     const repository =
       transaction && transaction instanceof PrismaService
         ? transaction.clients
@@ -56,37 +56,6 @@ export class ClientPrismaRepository implements ClientRepository {
     })
   }
 
-  async incrementUserBalance(
-    clientId: number,
-    transactionType: TRANSACTION_TYPE,
-    transactionValue: number,
-    transactionDescription: string,
-    transaction?: Prisma.TransactionClient
-  ): Promise<any> {
-    const repository =
-      transaction && transaction instanceof PrismaService
-        ? transaction.clients
-        : this.repository
-
-    return repository.update({
-      where: {
-        id: clientId
-      },
-      data: {
-        balance: {
-          increment: transactionValue
-        },
-        transactions: {
-          create: {
-            description: transactionDescription,
-            amount: transactionValue,
-            type: transactionType
-          }
-        }
-      }
-    })
-  }
-
   async updateUserBalance(
     clientId: number,
     newBalance: number,
@@ -94,7 +63,7 @@ export class ClientPrismaRepository implements ClientRepository {
     transactionValue: number,
     transactionDescription: string,
     transaction?: Prisma.TransactionClient
-  ): Promise<any> {
+  ): Promise<Client> {
     const repository =
       transaction && transaction instanceof PrismaService
         ? transaction.clients
@@ -106,37 +75,6 @@ export class ClientPrismaRepository implements ClientRepository {
       },
       data: {
         balance: newBalance,
-        transactions: {
-          create: {
-            description: transactionDescription,
-            amount: transactionValue,
-            type: transactionType
-          }
-        }
-      }
-    })
-  }
-
-  async decrementUserBalance(
-    clientId: number,
-    transactionType: TRANSACTION_TYPE,
-    transactionValue: number,
-    transactionDescription: string,
-    transaction?: Prisma.TransactionClient
-  ): Promise<any> {
-    const repository =
-      transaction && transaction instanceof PrismaService
-        ? transaction.clients
-        : this.repository
-
-    return repository.update({
-      where: {
-        id: clientId
-      },
-      data: {
-        balance: {
-          decrement: transactionValue
-        },
         transactions: {
           create: {
             description: transactionDescription,

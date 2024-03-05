@@ -1,31 +1,15 @@
-import { Prisma, TRANSACTION_TYPE } from '@prisma/client'
+import { Prisma, TRANSACTION_TYPE, clients as Client } from '@prisma/client'
 
 export abstract class ClientRepository {
   abstract findLastTenTransactionsByUser(
     clientId: number,
     transaction?: Prisma.TransactionClient
-  ): Promise<any>
+  ): Promise<Client>
 
   abstract findClientById(
     clientId: number,
     transaction?: Prisma.TransactionClient
-  ): Promise<any>
-
-  abstract incrementUserBalance(
-    clientId: number,
-    transactionType: TRANSACTION_TYPE,
-    transactionValue: number,
-    transactionDescription: string,
-    transaction?: Prisma.TransactionClient
-  ): Promise<any>
-
-  abstract decrementUserBalance(
-    clientId: number,
-    transactionType: TRANSACTION_TYPE,
-    transactionValue: number,
-    transactionDescription: string,
-    transaction?: Prisma.TransactionClient
-  ): Promise<any>
+  ): Promise<Client>
 
   abstract updateUserBalance(
     clientId: number,
@@ -34,5 +18,5 @@ export abstract class ClientRepository {
     transactionValue: number,
     transactionDescription: string,
     transaction?: Prisma.TransactionClient
-  ): Promise<any>
+  ): Promise<Client>
 }
