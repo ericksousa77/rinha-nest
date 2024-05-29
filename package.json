@@ -12,7 +12,7 @@
     "docker:up": "docker-compose up -d",
     "docker:build": "docker-compose up --build -d",
     "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
+    "db:prisma:generate": "npx prisma generate",
     "db:prisma:format": "npx prisma format",
     "db:prisma:migrate:deploy": "npx prisma migrate deploy",
     "start:debug": "nest start --debug --watch",

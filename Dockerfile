@@ -16,4 +16,4 @@ COPY . .
 # RUN npx prisma migrate deploy && npm run build
 
 # Comando para iniciar a aplicação
-CMD npm run db:migrate && npm run build && npm run start:prod
+CMD npm run db:prisma:generate && npm run db:prisma:migrate:deploy && npm run build && npm run start:prod

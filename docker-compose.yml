@@ -10,7 +10,7 @@ services:
       PORT: 3333
     depends_on:
       - postgres
-    restart: always
+    restart: on-failure
     networks:
       - app-network
     deploy:

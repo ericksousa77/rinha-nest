@@ -1,8 +1,10 @@
+DELETE FROM "_prisma_migrations";
+
 -- CreateEnum
 CREATE TYPE "TRANSACTION_TYPE" AS ENUM ('credit', 'debit');
 
 -- CreateTable
-CREATE TABLE "clients" (
+CREATE TABLE IF NOT EXISTS "clients" (
     "id" SERIAL NOT NULL,
     "balance" DECIMAL(12,0) NOT NULL,
     "limit" DECIMAL(12,0) NOT NULL,
@@ -13,7 +15,7 @@ CREATE TABLE "clients" (
 );
 
 -- CreateTable
-CREATE TABLE "transactions" (
+CREATE TABLE IF NOT EXISTS "transactions" (
     "id" SERIAL NOT NULL,
     "client_id" INTEGER NOT NULL,
     "amount" DECIMAL(12,0) NOT NULL,
